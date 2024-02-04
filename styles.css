@@ -7,3 +7,21 @@
 .contactText {
     text-align: end;
 }
+
+.btn-light {
+    background-color: #ecc7ff;
+    color: #8729b9;
+}
+
+.btn-light:hover {
+    background-color: white;
+}
+
+.btn-outline-secondary {
+    background-color: rgb(239, 226, 255);
+    color: #8729b9;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #8729b9;
+}
