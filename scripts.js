@@ -23,7 +23,7 @@ function injectNavBar() {
     xhr.open('GET', 'navbar.html', true);
     xhr.onreadystatechange = function () {
         if (this.readyState !== 4) return;
-        if (this.status !== 200) return; // or whatever error handling you want
+        if (this.status !== 200) return;
         document.getElementById('navbarPlaceholder').innerHTML = this.responseText;
     };
     xhr.send();
