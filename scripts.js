@@ -14,6 +14,10 @@ function goToCAGGitHub() {
     window.open("https://github.com/AnhadSodhi/Cowboys-and-Glocktopi");
 }
 
+function goToSTGitHub() {
+    window.open("https://github.com/AnhadSodhi/StressTest");
+}
+
 function injectNavBar() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'navbar.html', true);
