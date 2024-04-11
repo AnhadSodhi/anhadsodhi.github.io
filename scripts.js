@@ -18,6 +18,10 @@ function goToSTGitHub() {
     window.open("https://github.com/AnhadSodhi/StressTest");
 }
 
+function goToDAGitHub() {
+    window.open("https://github.com/AnhadSodhi/Digit-Adder");
+}
+
 function injectNavBar() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'navbar.html', true);
