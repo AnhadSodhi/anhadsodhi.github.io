@@ -22,6 +22,10 @@ function goToDAGitHub() {
     window.open("https://github.com/AnhadSodhi/Digit-Adder");
 }
 
+function goToWCTGitHub() {
+    window.open("https://github.com/AnhadSodhi/Warframe-Circuit-Tracker");
+}
+
 function injectNavBar() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'navbar.html', true);
