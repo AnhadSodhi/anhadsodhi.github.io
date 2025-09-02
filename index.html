@@ -20,12 +20,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background: black;
       }
 
+      /* Modern browsers: CSS aspect-ratio */
       #unity-canvas {
-        width: 100% !important;
-        height: 100% !important;
+        width: 100%;
+        height: auto;
+        max-width: 100vw;
+        max-height: 100vh;
+        aspect-ratio: 16 / 9;
         background: black;
+        display: block;
+        position: relative; /* make it a positioning parent */
       }
 
       /* --- Loading Bar --- */
@@ -39,6 +46,7 @@
         text-align: center;
         font-family: sans-serif;
         color: #f9e4b7;
+        pointer-events: none;
       }
 
       #unity-progress {
@@ -58,21 +66,62 @@
         border-radius: 8px 0 0 8px;
         transition: width 0.2s ease-out;
       }
+
+      /* Position loading bar relative to the canvas */
+      #unity-wrapper {
+        position: relative;
+        display: inline-block;
+      }
     </style>
   </head>
 
   <body>
     <div id="unity-container">
-      <canvas id="unity-canvas"></canvas>
-      <div id="unity-loading-bar">
-        <div>Loading...</div>
-        <div id="unity-progress">
-          <div id="unity-progress-fill"></div>
+      <div id="unity-wrapper">
+        <canvas id="unity-canvas"></canvas>
+        <div id="unity-loading-bar">
+          <div>Loading...</div>
+          <div id="unity-progress">
+            <div id="unity-progress-fill"></div>
+          </div>
         </div>
       </div>
     </div>
 
     <script>
+      // --- Letterbox fallback for older browsers ---
+      function resizeCanvas() {
+        const canvas = document.getElementById("unity-canvas");
+        const wrapper = document.getElementById("unity-wrapper");
+        const container = document.getElementById("unity-container");
+
+        let containerWidth = container.clientWidth;
+        let containerHeight = container.clientHeight;
+        let targetAspect = 16 / 9;
+
+        let width, height;
+        if (containerWidth / containerHeight > targetAspect) {
+          // too wide → match height
+          height = containerHeight;
+          width = height * targetAspect;
+        } else {
+          // too tall → match width
+          width = containerWidth;
+          height = width / targetAspect;
+        }
+
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+
+        // wrapper tracks the same size as the canvas
+        wrapper.style.width = width + "px";
+        wrapper.style.height = height + "px";
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      window.addEventListener("load", resizeCanvas);
+
+      // --- Unity Bootstrapping ---
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/Builds.loader.js";
       var config = {
@@ -94,6 +143,7 @@
             (progress * 100) + "%";
         }).then((unityInstance) => {
           document.querySelector("#unity-loading-bar").style.display = "none";
+          resizeCanvas(); // enforce sizing once Unity takes over
         }).catch((message) => {
           alert(message);
         });
